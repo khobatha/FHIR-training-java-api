@@ -10,19 +10,22 @@ public class Example07_ClientReadAndUpdate {
 	public static void main(String[] theArgs) {
 	   // Create a client
 		FhirContext ctx = FhirContext.forR4();
-		IGenericClient client = ctx.newRestfulGenericClient("http://localhost:8082/fhir");
-
-		Patient patient = new Patient();
-		patient.setId("Patient/example"); // Give the patient an ID
-		patient.addName().setFamily("Simpson").addGiven("Homer");
-		patient.setGender(Enumerations.AdministrativeGender.MALE);
+		IGenericClient client = ctx.newRestfulGenericClient("http://hapi.fhir.org/baseR4/");
+		Patient pat=client.read().resource(Patient.class).withId("1739431").execute();
+		//Patient patient = new Patient();
+		//patient.setId("Patient/example"); // Give the patient an ID
+		//patient.addName().setFamily("Simpson").addGiven("Homer");
+		//patient.setGender(Enumerations.AdministrativeGender.MALE);
 
 		// Update the patient
-		MethodOutcome outcome = client
-         .update()
-         .resource(patient)
-         .execute();
+		//MethodOutcome outcome = client
+        // .update()
+        // .resource(patient)
+        // .execute();
 		
-		System.out.println("Now have ID: " + outcome.getId());
+		//System.out.println("Now have ID: " + outcome.getId());
+		System.out.println("....................................");
+		System.out.println(ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(pat));
+		System.out.println("....................................");
 	}
 }
